@@ -1,0 +1,49 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Management;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using OpenQA.Selenium;
+
+namespace TravianTools.SeleniumHost
+{
+    /// <summary>
+    /// Interaction logic for SeleniumHostWPF.xaml
+    /// </summary>
+    public partial class SeleniumHostWPF : UserControl
+    {
+        public SeleniumHostWPF()
+        {
+            InitializeComponent();
+        }
+
+        public DriverService DriverService
+        {
+            get => (DriverService)GetValue(DriverServiceProperty);
+            set => SetValue(DriverServiceProperty, value);
+        }
+
+        public static readonly DependencyProperty DriverServiceProperty =
+            DependencyProperty.Register(nameof(DriverService), typeof(DriverService), typeof(SeleniumHostWPF), new PropertyMetadata(default(DriverService), DriverServicePropertyChanged));
+
+        private static void DriverServicePropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (sender is SeleniumHostWPF that) that.SeleniumHost.DriverService = e.NewValue as DriverService;
+        }
+    }
+
+    
+}
